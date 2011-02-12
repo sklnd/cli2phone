@@ -1,0 +1,4 @@
+distribute==0.6.10
+httplib2==0.6.0
+oauth2==1.5.165
+wsgiref==0.1.2
