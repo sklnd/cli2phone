@@ -6,6 +6,7 @@ import oauth2 as oauth
 import urlparse
 import json
 import os.path
+import time
 
 
 class Auth():
@@ -35,6 +36,10 @@ class Auth():
             oauth_verifier = raw_input(prompt)
 
             self.get_access_keys(oauth_verifier)
+
+        else:
+            with open('auth.json', 'r') as f:
+                self.access_token = json.load(f)
 
     def get_request_url(self):
         """
@@ -109,7 +114,7 @@ class Auth():
 
         client = oauth.Client(consumer, token)
         client.set_signature_method(oauth.SignatureMethod_HMAC_SHA1())
-        resp, content = client.request(baseUrl,
+        resp, content = client.request(url,
                                        method="POST",
                                        body=urllib.urlencode(params),
                                        headers=headers)
