@@ -36,7 +36,7 @@ class Auth():
     chrometophone.
     """
 
-    def __init__(self, url=None):
+    def __init__(self, url=None, reauth=False):
         if url is not None:
             self.url = url
         else:
@@ -44,7 +44,7 @@ class Auth():
 
         self.authfile = "auth.json"
 
-        if not os.path.exists(self.authfile):
+        if reauth or (not os.path.exists(self.authfile)):
             req_url = self.get_request_url()
 
             print "In order to use cli2phone, you must authorize cli2phone "\
