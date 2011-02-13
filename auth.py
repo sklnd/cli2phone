@@ -25,16 +25,16 @@ class Auth():
         if not os.path.exists(self.authfile):
             req_url = self.get_request_url()
 
-            print "In order to use cli2phone, you must authorize cli2phone to " \
-                  "access the google account your android phone uses.\n\n" \
+            print "In order to use cli2phone, you must authorize cli2phone "\
+                  "to access the google account your android phone uses.\n\n" \
                   "Grant access for cli2phone with the following URL:"
             print req_url
 
             print ""
-            oauth_verifier = raw_input('After authorizing, enter the PIN provided by Google: ')
+            prompt = "After authorizing, enter the PIN provided by Google: "
+            oauth_verifier = raw_input(prompt)
 
             self.get_access_keys(oauth_verifier)
-
 
     def get_request_url(self):
         """
@@ -90,10 +90,9 @@ class Auth():
             raise IOError("Failed to retrieve access tokens: PIN %s URL %s" %
                           (oauth_verifier, self.auth["request_url"]))
 
-
     def request(self, url, params):
         """
-        Performs an oAuth authenticated request with previously retrieved 
+        Performs an oAuth authenticated request with previously retrieved
         access tokens.
         """
 
@@ -108,17 +107,12 @@ class Auth():
                             secret=self.access_token['oauth_token_secret'])
         consumer = oauth.Consumer(key='anonymous', secret='anonymous')
 
-
         client = oauth.Client(consumer, token)
         client.set_signature_method(oauth.SignatureMethod_HMAC_SHA1())
-        resp, content = client.request(baseUrl, 
-                                       method="POST", 
-                                       body=urllib.urlencode(params), 
+        resp, content = client.request(baseUrl,
+                                       method="POST",
+                                       body=urllib.urlencode(params),
                                        headers=headers)
 
         if resp['status'] != '200':
             raise IOError("Failed to do request: %s" % content)
-
-        
-x = Auth()
-
