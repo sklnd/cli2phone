@@ -16,6 +16,9 @@ baseUrl = 'https://chrometophone.appspot.com/send?ver=' + apiVersion
 
 
 def main(argv=None):
+
+    do_reauth = False
+
     if argv is None:
         argv = sys.argv
 

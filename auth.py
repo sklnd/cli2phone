@@ -59,7 +59,7 @@ class Auth():
             self.get_access_keys(oauth_verifier)
 
         else:
-            with open('auth.json', 'r') as f:
+            with open(self.authfile, 'r') as f:
                 self.access_token = json.load(f)
 
     def get_request_url(self):
